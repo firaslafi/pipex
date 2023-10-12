@@ -19,6 +19,7 @@
 #include <fcntl.h>
 # include <stdio.h>
 #include <sys/wait.h>
+#include <errno.h>  
 
 # define READ_END  0
 # define WRITE_END  1
@@ -27,6 +28,7 @@ typedef struct s_pipex
 {
     pid_t *pid;
 
+    int status;
     
 } t_pipex ;
 

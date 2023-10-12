@@ -89,9 +89,7 @@ int main(int argc, char **argv, char **envp)
 		else
 		{
 			// wait(NULL);
-			// char arr[20000];
-			// read(fds[READ_END], arr, 20000);
-			// ft_putendl_fd(arr, 2);
+
 			pid_t pid2 = fork();
 			if (pid2 == - 1)
 				{
@@ -116,8 +114,6 @@ int main(int argc, char **argv, char **envp)
 		// printf("cmd path = %s\n", path);
 		
 
-
-		
  		// fds = open("example.txt", O_WRONLY | O_CREAT, 0644);
 		// execve("/bin/ls", &argv[2], NULL);
 		// sleep(5);
