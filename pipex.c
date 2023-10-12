@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 15:19:36 by flafi             #+#    #+#             */
-/*   Updated: 2023/10/03 20:26:16 by flafi            ###   ########.fr       */
+/*   Updated: 2023/10/12 20:56:51 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ int main(int argc, char **argv, char **envp)
 		{
 			int fd1;
 			
-			fd1 = open("file1", O_RDONLY);
+			fd1 = open(argv[1], O_RDONLY);
 			if (fd1 == -1)
-				perror("myerror fd1");
+				ft_error("file1 issue");
 			close(fds[READ_END]);
 			dup2(fds[WRITE_END], STDOUT_FILENO);
 			close(fds[WRITE_END]);
 			dup2(fd1, STDIN_FILENO);
-			execve(ft_check_x(array, cmd1), cmd1, NULL);
+			execve(ft_check_x(array, cmd1), cmd1, envp);
 
 		}
 		else
@@ -92,21 +92,22 @@ int main(int argc, char **argv, char **envp)
 
 			pid_t pid2 = fork();
 			if (pid2 == - 1)
-				{
-					perror("myerror fork");
-					exit(EXIT_FAILURE);
-				}
+				ft_error("myerror fork");
 			if (pid2 == 0)
 			{
 				int fd2;
 
-				fd2 = open("file2", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				fd2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				close(fds[WRITE_END]);
 				dup2(fds[READ_END], STDIN_FILENO);
 				close(fds[READ_END]);
 				dup2(fd2, STDOUT_FILENO);
 				char **cmd2 = ft_split(argv[3], ' ');
-				execve(ft_check_x(array, cmd2), cmd2, NULL);
+				execve(ft_check_x(array, cmd2), cmd2, envp);
+			}
+			else
+			{
+				wait(NULL);
 			}
 		}
 
