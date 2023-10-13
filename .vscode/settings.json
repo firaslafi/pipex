@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "pipex.h": "c",
-        "errno.h": "c"
+        "errno.h": "c",
+        "__tuple": "c",
+        "array": "c"
     }
 }

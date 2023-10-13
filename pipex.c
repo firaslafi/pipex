@@ -6,121 +6,117 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 15:19:36 by flafi             #+#    #+#             */
-/*   Updated: 2023/10/12 20:56:51 by flafi            ###   ########.fr       */
+/*   Updated: 2023/10/13 18:04:40 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "./pipex.h"
+#include "./pipex.h"
+
 void	ft_error(char *sms)
 {
 	ft_putendl_fd(sms, 2);
 	exit(EXIT_FAILURE);
 }
 // checking for excuting permissions and return path
-char *ft_check_x(char **array, char **cmd1)
+char	*ft_check_x(char **array, char **cmd1)
 {
-	int i;
-	char *path;
+	int		i;
+	char	*path;
 
 	i = 0;
-	while(array[i])
+	while (array[i])
 	{
 		array[i] = ft_strjoin(array[i], "/");
 		array[i] = ft_strjoin(array[i], *cmd1);
 		if (access(array[i], X_OK) == 0)
-			{
-				path = array[i];
-				break;
-			}
+		{
+			path = array[i];
+			break ;
+		}
 		else
 			i++;
 	}
-	// printf("path is = %s\n", path);
+	if (!path)
+		ft_error("no path");
 	return (path);
 }
-// void ft_execute()
-// {
-
-// }
-int main(int argc, char **argv, char **envp)
+// getting the PATH line and splitting it into a 2d array
+char	**get_array_envp(char **envp)
 {
-	t_pipex pipex;
-	
+	int		i;
+	char	**array;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strnstr(envp[i], "PATH", 5))
+			break ;
+		i++;
+	}
+	array = ft_split(envp[i], ':');
+	array[0] = ft_substr(array[0], 5, ft_strlen(array[0]) - 5);
+	return (array);
+}
+void	ft_xcmd1(int *fds, char **argv, char **envp)
+{
+	int		fd1;
+	char	**cmd1;
+
+	cmd1 = ft_split(argv[2], ' ');
+	fd1 = open(argv[1], O_RDONLY);
+	if (fd1 == -1)
+		ft_error("file1 issue");
+	close(fds[READ_END]);
+	dup2(fds[WRITE_END], STDOUT_FILENO);
+	close(fds[WRITE_END]);
+	dup2(fd1, STDIN_FILENO);
+	execve(ft_check_x(get_array_envp(envp), cmd1), cmd1, envp);
+}
+void	ft_xcmd2(int *fds, char **argv, char **envp)
+{
+	pid_t	pid2;
+	int		fd2;
+	char	**cmd2;
+
+	pid2 = fork();
+	if (pid2 == -1)
+		ft_error("myerror fork");
+	if (pid2 == 0)
+	{
+		fd2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		close(fds[WRITE_END]);
+		dup2(fds[READ_END], STDIN_FILENO);
+		close(fds[READ_END]);
+		dup2(fd2, STDOUT_FILENO);
+		cmd2 = ft_split(argv[3], ' ');
+		execve(ft_check_x(get_array_envp(envp), cmd2), cmd2, envp);
+	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_pipex	pipex;
+		int fds[2];
+	int		i;
+	pid_t	pid;
+
 	if (argc == 5)
 	{
-		int fds[2];
-		
+		i = 0;
 		if (pipe(fds) == -1)
 			ft_error("myerror pipe");
-
-		// getting the PATH line and splitting it into a 2d array
-		int i = 0;
-		while(envp[i])
-		{
-			if (ft_strnstr(envp[i], "PATH", 5))
-				break;
-			i++;
-		}
-		char **array = ft_split(envp[i], ':');
-		array[0] = ft_substr(array[0], 5, ft_strlen(array[0]) - 5);
-		
-		char **cmd1 = ft_split(argv[2], ' ');
-
-
-		pid_t pid = fork();
-		if (pid == - 1)
+		pid = fork();
+		if (pid == -1)
 			ft_error("myerror fork");
-
-
 		if (pid == 0)
-		{
-			int fd1;
-			
-			fd1 = open(argv[1], O_RDONLY);
-			if (fd1 == -1)
-				ft_error("file1 issue");
-			close(fds[READ_END]);
-			dup2(fds[WRITE_END], STDOUT_FILENO);
-			close(fds[WRITE_END]);
-			dup2(fd1, STDIN_FILENO);
-			execve(ft_check_x(array, cmd1), cmd1, envp);
-
-		}
+			ft_xcmd1(fds, argv, envp);
 		else
 		{
 			// wait(NULL);
-
-			pid_t pid2 = fork();
-			if (pid2 == - 1)
-				ft_error("myerror fork");
-			if (pid2 == 0)
-			{
-				int fd2;
-
-				fd2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-				close(fds[WRITE_END]);
-				dup2(fds[READ_END], STDIN_FILENO);
-				close(fds[READ_END]);
-				dup2(fd2, STDOUT_FILENO);
-				char **cmd2 = ft_split(argv[3], ' ');
-				execve(ft_check_x(array, cmd2), cmd2, envp);
-			}
-			else
-			{
-				wait(NULL);
-			}
+			ft_xcmd2(fds, argv, envp);
 		}
-
-
-		// printf("cmd path = %s\n", path);
-		
-
- 		// fds = open("example.txt", O_WRONLY | O_CREAT, 0644);
-		// execve("/bin/ls", &argv[2], NULL);
-		// sleep(5);
-		// unlink("example.txt");
 	}
 	else
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
