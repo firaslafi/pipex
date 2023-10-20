@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 19:41:38 by flafi             #+#    #+#             */
-/*   Updated: 2023/10/20 21:08:41 by flafi            ###   ########.fr       */
+/*   Created: 2023/10/20 21:07:01 by flafi             #+#    #+#             */
+/*   Updated: 2023/10/20 21:08:09 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./pipex.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_error(char *sms)
 {
-	size_t	counter;
-
-	counter = 0;
-	while (*s)
-	{
-		s++;
-		counter++;
-	}
-	return (counter);
+	ft_putendl_fd(sms, 2);
+	exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 #    By: flafi <flafi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 16:38:00 by flafi             #+#    #+#              #
-#    Updated: 2023/10/13 16:39:29 by flafi            ###   ########.fr        #
+#    Updated: 2023/10/20 21:07:39 by flafi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 
 .SILENT:
 # Source and output files
-SRC = pipex.c
+SRC = pipex.c ft_error.c
 LIBFT = libft/libft.a
 NAME = pipex
 

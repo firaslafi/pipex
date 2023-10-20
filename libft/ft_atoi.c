@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 22:54:23 by flafi             #+#    #+#             */
-/*   Updated: 2023/04/16 03:46:07 by flafi            ###   ########.fr       */
+/*   Updated: 2023/10/20 21:10:19 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ int	ft_atoi(const char *str)
 	{
 		if (*str == '-')
 		{
-		sign *= -1;
-		str++;
+			sign *= -1;
+			str++;
 		}
 		else
 			str++;
 	}
 	while (ft_isdigit(*str))
 	{
-	result = result * 10 + *str - '0';
-	str++;
+		result = result * 10 + *str - '0';
+		str++;
 	}
 	return (result * sign);
 }

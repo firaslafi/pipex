@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:38:43 by flafi             #+#    #+#             */
-/*   Updated: 2023/04/12 18:31:38 by flafi            ###   ########.fr       */
+/*   Updated: 2023/10/20 21:09:55 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	if (!*lst)
 	{
-	*lst = new;
+		*lst = new;
 	}
 	else
 	{
-	new->next = *lst;
-	*lst = new;
+		new->next = *lst;
+		*lst = new;
 	}
 }

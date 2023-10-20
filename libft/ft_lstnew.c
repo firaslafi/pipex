@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 18:16:43 by flafi             #+#    #+#             */
-/*   Updated: 2023/04/14 02:05:12 by flafi            ###   ########.fr       */
+/*   Updated: 2023/10/20 21:09:50 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*node;
 
-	node = (t_list *) malloc(sizeof(t_list));
+	node = (t_list *)malloc(sizeof(t_list));
 	if (!node)
 		return (NULL);
-		node->content = content;
-		node->next = NULL;
+	node->content = content;
+	node->next = NULL;
 	return (node);
 }

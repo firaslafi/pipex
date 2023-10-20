@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:48:18 by flafi             #+#    #+#             */
-/*   Updated: 2023/04/13 03:42:22 by flafi            ###   ########.fr       */
+/*   Updated: 2023/10/20 21:09:07 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ char	*ft_strrchr(const char *s, int c)
 	ptr = NULL;
 	while (len >= 0)
 	{
-		if (s[len] == (char) c)
+		if (s[len] == (char)c)
 		{
-			ptr = (char *) &s[len];
+			ptr = (char *)&s[len];
 			return (ptr);
 		}
 		else
-		len--;
+			len--;
 	}
 	return (ptr);
 }

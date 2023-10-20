@@ -6,17 +6,12 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 15:19:36 by flafi             #+#    #+#             */
-/*   Updated: 2023/10/13 18:04:40 by flafi            ###   ########.fr       */
+/*   Updated: 2023/10/20 21:07:14 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./pipex.h"
 
-void	ft_error(char *sms)
-{
-	ft_putendl_fd(sms, 2);
-	exit(EXIT_FAILURE);
-}
 // checking for excuting permissions and return path
 char	*ft_check_x(char **array, char **cmd1)
 {
@@ -40,6 +35,7 @@ char	*ft_check_x(char **array, char **cmd1)
 		ft_error("no path");
 	return (path);
 }
+
 // getting the PATH line and splitting it into a 2d array
 char	**get_array_envp(char **envp)
 {
@@ -57,6 +53,7 @@ char	**get_array_envp(char **envp)
 	array[0] = ft_substr(array[0], 5, ft_strlen(array[0]) - 5);
 	return (array);
 }
+
 void	ft_xcmd1(int *fds, char **argv, char **envp)
 {
 	int		fd1;
@@ -72,6 +69,7 @@ void	ft_xcmd1(int *fds, char **argv, char **envp)
 	dup2(fd1, STDIN_FILENO);
 	execve(ft_check_x(get_array_envp(envp), cmd1), cmd1, envp);
 }
+
 void	ft_xcmd2(int *fds, char **argv, char **envp)
 {
 	pid_t	pid2;
@@ -96,7 +94,7 @@ void	ft_xcmd2(int *fds, char **argv, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
-		int fds[2];
+	int		fds[2];
 	int		i;
 	pid_t	pid;
 

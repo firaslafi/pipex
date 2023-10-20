@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 16:26:42 by flafi             #+#    #+#             */
-/*   Updated: 2023/04/14 02:13:25 by flafi            ###   ########.fr       */
+/*   Updated: 2023/10/20 21:09:45 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_lstsize(t_list *lst)
 	i = 0;
 	while (lst != NULL)
 	{
-	i++;
-	lst = lst->next;
+		i++;
+		lst = lst->next;
 	}
 	return (i);
 }

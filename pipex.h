@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 18:00:11 by flafi             #+#    #+#             */
-/*   Updated: 2023/10/02 19:04:50 by flafi            ###   ########.fr       */
+/*   Updated: 2023/10/20 21:08:04 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,24 @@
 # define PIPEX_H
 
 # include "./libft/libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-#include <fcntl.h>
+# include <errno.h>
+# include <fcntl.h>
 # include <stdio.h>
-#include <sys/wait.h>
-#include <errno.h>  
+# include <stdlib.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
-# define READ_END  0
-# define WRITE_END  1
+# define READ_END 0
+# define WRITE_END 1
 
 typedef struct s_pipex
 {
-    pid_t *pid;
+	pid_t	*pid;
 
-    int status;
-    
-} t_pipex ;
+	int		status;
+
+}			t_pipex;
+
+void	ft_error(char *sms);
 
 #endif
