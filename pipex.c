@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 15:19:36 by flafi             #+#    #+#             */
-/*   Updated: 2023/10/20 21:07:14 by flafi            ###   ########.fr       */
+/*   Updated: 2023/10/21 21:54:12 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void	ft_xcmd1(int *fds, char **argv, char **envp)
 	dup2(fds[WRITE_END], STDOUT_FILENO);
 	close(fds[WRITE_END]);
 	dup2(fd1, STDIN_FILENO);
-	execve(ft_check_x(get_array_envp(envp), cmd1), cmd1, envp);
+	if (execve(ft_check_x(get_array_envp(envp), cmd1), cmd1, envp) < 0)
+		ft_error("cmd err");
 }
 
 void	ft_xcmd2(int *fds, char **argv, char **envp)
@@ -110,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_xcmd1(fds, argv, envp);
 		else
 		{
-			// wait(NULL);
+			wait(NULL);
 			ft_xcmd2(fds, argv, envp);
 		}
 	}
