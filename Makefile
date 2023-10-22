@@ -6,13 +6,13 @@
 #    By: flafi <flafi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 16:38:00 by flafi             #+#    #+#              #
-#    Updated: 2023/10/21 22:01:29 by flafi            ###   ########.fr        #
+#    Updated: 2023/10/22 19:26:41 by flafi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Compiler and flags
 CC = cc
-CFLAGS = -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 
 .SILENT:
 # Source and output files

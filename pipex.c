@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 15:19:36 by flafi             #+#    #+#             */
-/*   Updated: 2023/10/21 21:54:12 by flafi            ###   ########.fr       */
+/*   Updated: 2023/10/22 19:40:22 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*ft_check_x(char **array, char **cmd1)
 	int		i;
 	char	*path;
 
+	path = NULL;
 	i = 0;
 	while (array[i])
 	{
@@ -68,7 +69,10 @@ void	ft_xcmd1(int *fds, char **argv, char **envp)
 	close(fds[WRITE_END]);
 	dup2(fd1, STDIN_FILENO);
 	if (execve(ft_check_x(get_array_envp(envp), cmd1), cmd1, envp) < 0)
+	{
+		free_split(cmd1);
 		ft_error("cmd err");
+	}
 }
 
 void	ft_xcmd2(int *fds, char **argv, char **envp)
@@ -88,13 +92,16 @@ void	ft_xcmd2(int *fds, char **argv, char **envp)
 		close(fds[READ_END]);
 		dup2(fd2, STDOUT_FILENO);
 		cmd2 = ft_split(argv[3], ' ');
-		execve(ft_check_x(get_array_envp(envp), cmd2), cmd2, envp);
+		if (execve(ft_check_x(get_array_envp(envp), cmd2), cmd2, envp) < 0)
+		{
+			free_split(cmd2);
+			ft_error("cmd err");
+		}
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_pipex	pipex;
 	int		fds[2];
 	int		i;
 	pid_t	pid;
